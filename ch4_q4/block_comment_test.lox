@@ -1,0 +1,7 @@
+print "test before";
+/* outer
+    line x
+    /* nexted */
+    line y
+*/
+print "test after";
