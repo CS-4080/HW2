@@ -88,6 +88,9 @@ class Scanner {
                 if (match('/')) {
                     // A comment goes until the end of the line.
                     while (peek() != '\n' && !isAtEnd()) advance();
+                } else if(match('*')) {
+                    // block comment: /* ... */ (allow nesting)
+                    skipBlockComm();
                 } else {
                     addToken(SLASH);
                 }
@@ -236,6 +239,41 @@ class Scanner {
     private void addToken(TokenType type, Object literal) {
         String text = source.substring(start, current);
         tokens.add(new Token(type, text, literal, line));
+    }
+
+    private void skipBlockComm() {
+        int depth = 1;
+
+        while(depth > 0) {
+            if(isAtEnd()) {
+                Lox.error(line, "Unterminated block comment.");
+                return;
+            }
+
+            if(peek() == '\n') {
+                line++;
+                advance();
+                continue;
+            }
+
+            if(peek() == '/' && peekNext() == '*') {
+                // advance twice and increment depth
+                advance();
+                advance();
+                depth++;
+                continue;
+            }
+
+            if(peek() == '*' && peekNext() == '/') {
+                // advance twice and decrement depth
+                advance();
+                advance();
+                depth--;
+                continue;
+            }
+
+            advance();
+        }
     }
 //< advance-and-add-token
 }
