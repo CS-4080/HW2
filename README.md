@@ -15,6 +15,7 @@ CS 4080.03<br>
     - A scanner that doesn’t discard comments and whitespace is necessary for programming tools that need to reconstruct/understand the original source code. This is useful for implementing automatic document generators, linting tools that examine code style, IDS performing refactoring, and the developing code formatters.
       
 4. Add support to Lox’s scanner for C-style /*...*/ block comments. Make sure to handle newlines in them. Consider allowing them to nest. Is adding support for nesting more work than you expected? Why?
+    - Adding support for nesting was slightly more work than I expected, given that I thought I could easily keep track of depth.
     - [code for ch4 q4](https://github.com/CS-4080/HW2/tree/main/ch4_q4)
 
 ### Ch5
